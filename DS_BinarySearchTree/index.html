@@ -1,0 +1,78 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Binary Search Trees</title>
+</head>
+<body>
+	<h3>The Binary Search Tree Class with different methods:</h3>
+	<ul>
+		<li>Insertion (insert)</li>
+		<li>Searching (search)</li>
+	</ul>
+	<script>	
+		class Node{
+			constructor(value){
+				this.val = value;
+				this.left = null;
+				this.right = null;
+			}
+		}
+
+		class BinarySearchTree{
+			constructor(){
+				this.root = null;
+			}
+
+			insert(value){
+				const newNode = new Node(value);
+				if(!this.root) {
+					this.root = newNode;
+					return this;
+				}
+				let current = this.root;
+				while(true){
+					if(value === current.val) return undefined;
+					if(value < current.val){
+						if(!current.left){
+							current.left = newNode;
+							return this;
+						}
+						current = current.left;
+					}else if(value > current.val){
+						if(!current.right){
+							current.right = newNode;
+							return this;
+						}
+						current = current.right;
+					}
+				}
+			}
+
+			search(value){
+				if(!this.root) return false;
+				let current = this.root;
+				while(true){
+					if(value === current.val) return true;
+					if(value > current.val){
+						if(!current.right) return false;
+						current = current.right;
+					}else if(value < current.val){
+						if(!current.left) return false;
+						current = current.left;
+					}
+				} 
+			}
+			
+		}
+
+		var tree = new BinarySearchTree();
+		/*tree.root = new Node(10);
+		tree.root.left = new Node(3);
+		tree.root.right = new Node(13);
+		tree.root.left.left = new Node(2);
+		tree.root.left.right = new Node(4);*/
+
+	</script>
+</body>
+</html>
