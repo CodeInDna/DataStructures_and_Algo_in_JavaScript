@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Creating Stack using Arrays and Linked List</title>
+</head>
+<body>
+	<h3>Creating Stack using Arrays and Linked List</h3>
+	<h4>Principle: LIFO (Last In First Out)</h4>
+	<p>Note: Open up the browser console (Ctrl + Shift + J/I)</p>
+	<script>
+		// Stack using Arrays (LIFO)
+		let stack = [];
+		console.log('Empty Stack');
+		console.log('-------------------');
+
+		// Use push and pop
+		console.log('Using push and pop');
+		console.log('Push items from the Last : LAST IN');
+		stack.push('I');			console.log(stack);
+		stack.push('like');			console.log(stack);
+		stack.push('Pizza');		console.log(stack);
+		stack.push('and');			console.log(stack);
+		stack.push('Ice-Cream');	console.log(stack);
+		console.log('-------------------');
+
+		// Use push and pop
+		console.log('Pop items : FIRST OUT');
+		stack.pop();			console.log(stack);
+		stack.pop();			console.log(stack);
+		stack.pop();		console.log(stack);
+		stack.pop();			console.log(stack);
+		stack.pop();	console.log(stack);
+		console.log('-------------------');
+
+		// Use shift and unshift
+		console.log('Using Shift and Unshift');
+		console.log('Insert items from the begining : LAST IN');
+		stack.unshift('I');			console.log(stack);
+		stack.unshift('like');			console.log(stack);
+		stack.unshift('Pizza');		console.log(stack);
+		stack.unshift('and');			console.log(stack);
+		stack.unshift('Ice-Cream');	console.log(stack);
+		console.log('-------------------');
+
+		// Use shift and unshift
+		console.log('remove items : FIRST OUT');
+		stack.shift();			console.log(stack);
+		stack.shift();			console.log(stack);
+		stack.shift();		console.log(stack);
+		stack.shift();			console.log(stack);
+		stack.shift();	console.log(stack);
+		console.log('-------------------');
+
+
+		//----------------------------------------------------------------------------------------------------
+		// Stack using Linked List
+		class Node{
+			constructor(value){
+				this.val = value;
+				this.next = null;
+			}
+		}
+
+		class Stack{
+			constructor(){
+				this.first = null;
+				this.last = null;
+				this.size = 0;
+			}
+
+			push(value){
+				const newNode = new Node(value);
+				if(!this.first) {
+					this.first = newNode;
+					this.last = this.first;
+				}else{
+					const temp = this.first;
+					this.first = newNode;
+					this.first.next = temp;
+				}
+				this.size++;
+				return this.size;
+			}
+
+			pop(){
+				if(!this.first) return undefined;
+				const temp = this.first;
+				this.first = temp.next;
+				this.size--;
+				if(this.size == 0) this.last=null;
+				return temp.val;
+			}
+		}
+		let stackLink = new Stack();
+		console.log('Empty StackLink');
+		console.log('-------------------');
+		// Use push and pop methods of linked list
+		console.log('Using Push and Pop method of Linked List Stack');
+		console.log('Push items from the Last : LAST IN');
+		console.log(stackLink.push('FIRST'));			
+		console.log(stackLink.push('SECOND'));			
+		console.log(stackLink.push('THIRD'));
+		console.log('-------------------');
+
+		// Use push and pop
+		console.log('Pop items : FIRST OUT');
+		console.log(stackLink.pop());			
+		console.log(stackLink.pop());			
+		console.log(stackLink.pop());		
+		console.log('-------------------');
+	</script>
+</body>
+</html>

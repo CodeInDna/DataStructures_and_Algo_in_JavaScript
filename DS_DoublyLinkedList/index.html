@@ -1,0 +1,170 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Doubly Linked List</title>
+</head>
+<body>
+	<h3>Open Console (Ctrl+Shift+J) and Try different methods:</h3>
+	<ul>
+		<li>push : push node into list from the end</li>
+		<li>pop : remove last node from the list</li>
+		<li>shift : remove first node from the list</li>
+		<li>unshift : insert node into list from the begining</li>
+		<li>get : get the node at the passed index</li>
+		<li>set : change the value of node at the given index</li>
+		<li>insert : Insert new node(value given) at the given index </li>
+		<li>remove : Remove the node at the given index</li>
+	</ul>
+	<script>	
+		// create node
+		class Node{
+			constructor(value){
+				this.val = value;
+				this.next = null;
+				this.prev = null;
+			}
+		}
+
+		// Doubly Linked List methods
+		class doublyLinkedList{
+			constructor(){
+				this.head = null;
+				this.tail = null;
+				this.length = 0;
+			}
+			
+			push(value){
+				let newNode = new Node(value);
+				if(!this.head){
+					this.head = newNode;
+					this.tail = this.head;
+				}else{
+					this.tail.next = newNode;
+					newNode.prev = this.tail;
+					this.tail = newNode;
+				}
+				this.length++;
+				return this;
+			}
+
+			pop(){
+				if(!this.head) return undefined;
+				const temp = this.tail;
+				if(this.length === 1) { 
+					this.head = null; 
+					this.tail = null;
+				}else{
+					this.tail = this.tail.prev;
+					this.tail.next = null;
+					temp.prev = null;		// popped node should not give any previous connection
+				}
+				this.length--;
+				return temp;
+			}
+
+			shift(){
+				if(!this.head) return undefined;
+				let oldHead = this.head;
+				if(this.length === 1){
+					this.head = null;
+					this.tail = null;
+				}else{
+					this.head = oldHead.next;
+					this.head.prev = null;
+					oldHead.next = null;
+				}
+				this.length--;
+				return oldHead;
+			}
+
+			unshift(value){
+				let newNode = new Node(value);
+				if(!this.head){
+					this.head = newNode;
+					this.tail = this.head;
+				}else{
+					this.head.prev = newNode;
+					newNode.next = this.head;
+					this.head = newNode;
+				}
+				this.length++;
+				return this;
+			}
+
+			get(index){
+				if(index < 0 || index >= this.length) return null;
+				let counter, current;
+				if(index <= (this.length / 2)){
+					counter = 0;
+					current = this.head;
+					while(index !== counter){
+						current = current.next;
+						counter++;
+					}
+				}else{
+					counter = this.length - 1;
+					current = this.tail;
+					while(index !== counter){
+						current = current.prev;
+						counter--;
+					}
+				}
+				return current;
+			}
+
+			set(index, newValue){
+				const getNode = this.get(index);
+				if(!getNode) return false;
+				getNode.val = newValue;
+				return true;
+			}
+
+			insert(index, value){
+				if(index < 0 || index > this.length) return false;
+				if(index === 0) return !!this.unshift(value);
+				if(index === this.length) return !!this.push(value);
+
+				// create new node
+				const newNode = new Node(value);
+				// get the before node
+				const beforeNode = this.get(index - 1);
+				// get the after node
+				let afterNode = beforeNode.next;
+
+				beforeNode.next = newNode;
+				newNode.prev = beforeNode;
+				newNode.next = afterNode;
+				afterNode.prev = newNode;
+				this.length++;
+				return true;
+			}
+
+			remove(index){
+				if(index < 0 || index >= this.length) return undefined;
+				if(index === 0) return this.shift();
+				if(index === this.length - 1) return this.pop();
+
+				let nodeToRemove = this.get(index);
+				let beforeNode = nodeToRemove.prev;
+				let afterNode = nodeToRemove.next;
+				[beforeNode.next, afterNode.prev] = [afterNode, beforeNode];
+				nodeToRemove.next = null;
+				nodeToRemove.prev = null;
+				this.length--;
+				return nodeToRemove;
+			}
+
+
+		}
+
+		const list = new doublyLinkedList();
+		list.push(1);
+		list.push(2);
+		list.push(3);
+		/*node = new Node(1);
+		node = new Node(2);
+		node.next.prev = node;*/
+	</script>
+</body>
+</html>

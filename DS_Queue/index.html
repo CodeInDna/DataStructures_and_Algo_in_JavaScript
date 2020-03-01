@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Creating Queues using Arrays and Linked List</title>
+</head>
+<body>
+	<h3>Creating Queues using Arrays and Linked List</h3>
+	<h4>Principle: FIFO (First In First Out)</h4>
+	<p>Note: Open up the browser console (Ctrl + Shift + J/I)</p>
+	<script>
+		// Queue using Arrays (FIFO)
+		let q = [];
+		console.log('Empty Queue');
+		console.log('-------------------');
+
+		// Use push and shift
+		console.log('Using push and shift');
+		console.log('Add items using push');
+		q.push('FIRST');			console.log(q);
+		q.push('SECOND');			console.log(q);
+		q.push('THIRD');		console.log(q);
+		console.log('-------------------');
+
+		console.log('Remove items using shift');
+		console.log(q);
+		q.shift();			console.log(q);
+		q.shift();			console.log(q);
+		q.shift();		console.log(q);
+		console.log('-------------------');
+
+		// Use unshift and pop
+		console.log('Using unshift and pop');
+		console.log('Add items using unshift');
+		q.unshift('FIRST');			console.log(q);
+		q.unshift('SECOND');			console.log(q);
+		q.unshift('THIRD');		console.log(q);
+		console.log('-------------------');
+
+		console.log('Remove items using pop');
+		console.log(q);
+		q.pop();			console.log(q);
+		q.pop();			console.log(q);
+		q.pop();		console.log(q);
+		console.log('-------------------');
+
+		//---------------------------------------------------------------------------------------------------
+		// Queue using Linked List
+		class Node{
+			constructor(value){
+				this.val = value;
+				this.next = null;
+			}
+		}
+
+		class Queue{
+			constructor(){
+				this.first = null;
+				this.last = null;
+				this.size = 0;
+			}
+
+			enqueue(value){
+				const newNode = new Node(value);
+				if(!this.first) {
+					this.first = newNode;
+					this.last = this.first;
+				}else{
+					this.last.next = newNode;
+					this.last = newNode;
+				}
+				this.size++;
+				return this.size;
+			}
+
+			dequeue(){
+				if(!this.first) return null;
+				const temp = this.first;
+				this.first = temp.next;
+				this.size--;
+				if(this.size == 0) this.last=null;
+				return temp.val;
+			}
+		}
+		let qLink = new Queue();
+		console.log('Empty Queue Link');
+		console.log('-------------------');
+		console.log('Using enqueue and dequeue method of Linked List Queue');
+		console.log('Add items from the Last');
+		console.log(qLink.enqueue('FIRST'));			
+		console.log(qLink.enqueue('SECOND'));			
+		console.log(qLink.enqueue('THIRD'));
+		console.log('-------------------');
+
+		console.log('Remove items at the begining');
+		console.log(qLink.dequeue());			
+		console.log(qLink.dequeue());			
+		console.log(qLink.dequeue());		
+		console.log('-------------------');
+
+		
+	</script>
+</body>
+</html>
